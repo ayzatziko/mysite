@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Blog</title>
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+  <!-- medium -->
+  <script src="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/js/medium-editor.min.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
+
+  <!-- css -->
+  <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+
+  <!-- js -->
+</head>
+<body>
+  <!-- navbar -->
+  <nav class="navbar navbar-default techfont custom-navbar">
+    <div class="container">
+      <ul class="nav navbar-nav">
+        <li><a class="navbar-brand bigbrand" href="{% url 'blog:posts_list' %}">My Blog</a></li>
+        <li><a class="navbar-link" href="{% url 'blog:about' %}">About</a></li>
+        <li><a class="navbar-link" href="https://www.github.com">GitHub</a></li>
+        <li><a class="navbar-link" href="https://www.linkedin.com">LinkedIn</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        {% if user.is_authenticated %}
+          <li>
+            <a class="nav navbar-right" href="{% url 'blog:create_post' %}">New post</a>
+          </li>
+          <li>
+            <a class="nav navbar-right" href="{% url 'blog:drafts' %}">Drafts</a>
+          </li>
+          <li>
+            <a class="nav navbar-right" href="{% url 'logout' %}">Logout</a>
+          </li>
+          <li>
+            <a>Welcome, {{ user.username }}!</a>
+          </li>
+        {% else %}
+          <li><a class="nav navbar-right" href="{% url 'login' %}"><span class="glyphicon glyphicon-user"></span></a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
+
+  <!-- content block -->
+  <div class="content container">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="blog_post">
+          {% block body_block %}
+          {% endblock %}
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
